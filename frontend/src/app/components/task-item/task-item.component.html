@@ -1,0 +1,60 @@
+<div class="card task-item mb-3" [ngClass]="{
+    'task-completed': task.completed,
+    'priority-high': task.priority === 'high',
+    'priority-medium': task.priority === 'medium',
+    'priority-low': task.priority === 'low'
+  }">
+    <div class="card-body">
+        <div class="row align-items-center">
+            <div class="col-md-8">
+                <div class="d-flex align-items-center mb-2">
+                    <input type="checkbox" class="form-check-input me-3" [checked]="task.completed"
+                        (change)="toggleComplete()">
+                    <h5 class="card-title mb-0" [class.text-decoration-line-through]="task.completed">
+                        {{ task.title }}
+                    </h5>
+                </div>
+
+                <p class="card-text text-muted mb-2">{{ task.description }}</p>
+
+                <div class="d-flex flex-wrap gap-2">
+                    <span class="badge" [ngClass]="{
+              'bg-danger': task.priority === 'high',
+              'bg-warning': task.priority === 'medium',
+              'bg-success': task.priority === 'low'
+            }">
+                        <i class="fas fa-flag me-1"></i>
+                        {{ task.priority | titlecase }}
+                    </span>
+
+                    <span class="badge" [ngClass]="{
+                        'bg-danger': task.category === 'shopping',
+                        'bg-info': task.category === 'health',
+                        'bg-dark': task.category === 'Work',
+                        'bg-success': task.category === 'personal',
+                        'bg-secondary': task.category === 'education'
+                      }">
+                        <i class="fas fa-tag me-1"></i>
+                        {{ task.category }}
+                    </span>
+
+                    <span *ngIf="task.dueDate" class="badge bg-secondary">
+                        <i class="fas fa-calendar me-1"></i>
+                        {{ task.dueDate | date:'short' }}
+                    </span>
+                </div>
+            </div>
+
+            <div class="col-md-4 text-end">
+                <div class="btn-group" role="group">
+                    <button class="btn btn-sm btn-outline-primary" (click)="editTask()" [disabled]="task.completed">
+                        <i class="fas fa-edit"></i>
+                    </button>
+                    <button class="btn btn-sm btn-outline-danger" (click)="deleteTask()">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
